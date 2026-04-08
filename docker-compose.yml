@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  node-1:
+    build: .
+    environment:
+      - NODE_ID=node-1
+      - CLUSTER_NODES=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50051:50051"
+    networks:
+      - dist-net
+
+  node-2:
+    build: .
+    environment:
+      - NODE_ID=node-2
+      - CLUSTER_NODES=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50052:50051"
+    networks:
+      - dist-net
+
+  node-3:
+    build: .
+    environment:
+      - NODE_ID=node-3
+      - CLUSTER_NODES=node-1=node-1:50051,node-2=node-2:50051,node-3=node-3:50051
+    ports:
+      - "50053:50051"
+    networks:
+      - dist-net
+
+networks:
+  dist-net:
+    driver: bridge

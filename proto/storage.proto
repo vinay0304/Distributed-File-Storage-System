@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package storage;
+
+option go_package = "github.com/vinay/distributed-kv/proto";
+
+service KeyValueStore {
+  rpc Put(PutRequest) returns (PutResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  
+  // Replication-specific RPCs
+  rpc InternalPut(PutRequest) returns (PutResponse);
+  rpc InternalDelete(DeleteRequest) returns (DeleteResponse);
+}
+
+message PutRequest {
+  string key = 1;
+  string value = 2;
+  bool primary_operation = 3; // To distinguish client vs replication
+}
+
+message PutResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GetRequest {
+  string key = 1;
+}
+
+message GetResponse {
+  string value = 1;
+  bool found = 2;
+}
+
+message DeleteRequest {
+  string key = 1;
+  bool primary_operation = 2;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}
