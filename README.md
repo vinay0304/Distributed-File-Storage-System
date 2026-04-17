@@ -78,6 +78,7 @@ The project includes a benchmarking and CLI tool in `cmd/client`.
 - `cmd/server`: Entry point for the distributed node.
 - `cmd/client`: Benchmarking and testing tool.
 
+
 ## License
 
 MIT
